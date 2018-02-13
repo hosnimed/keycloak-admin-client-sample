@@ -1,0 +1,52 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.10.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.sbm.keycloak.admin.client.demo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+ext {
+	keycloakVersion = '3.4.2.Final'
+}
+
+dependencies {
+//	compile('org.springframework.boot:spring-boot-actuator-docs')
+//	compile('org.springframework.boot:spring-boot-starter-actuator')
+//	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	compile('org.springframework.boot:spring-boot-starter-security')
+//	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.keycloak:keycloak-spring-boot-starter')
+	compile('org.keycloak:keycloak-admin-client:3.4.2.Final')
+	compile('javax.ws.rs:javax.ws.rs-api:2.0')
+	compile( group: 'org.jboss.resteasy', name: 'resteasy-client', version: '3.1.4.Final')
+	compile( group: 'org.jboss.resteasy', name: 'resteasy-jackson2-provider', version: '3.1.4.Final')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+//	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
+//	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	testCompile('org.springframework.security:spring-security-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.keycloak.bom:keycloak-adapter-bom:${keycloakVersion}"
+	}
+}
