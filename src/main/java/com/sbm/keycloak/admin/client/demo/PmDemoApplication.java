@@ -29,10 +29,7 @@ public class PmDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PmDemoApplication.class, args);
 
-		String serverUrl = "http://localhost:8080/auth";
-		String realm = "demo";
-		String clientId = "idm-client";
-		String clientSecret = "d0309200-cec2-4e5e-8c3d-54065eb4c3e4";
+
 
 		// User "idm-admin" needs at least "manage-users, view-clients, view-realm, view-users" roles for "realm-management"
 	/*
@@ -43,13 +40,7 @@ public class PmDemoApplication {
 				"security-admin-console");
 
 	*/
-	Keycloak keycloak = KeycloakBuilder.builder() //
-				.serverUrl(serverUrl) //
-				.realm(realm) //
-				.grantType(OAuth2Constants.CLIENT_CREDENTIALS) //
-				.clientId(clientId) //
-				.clientSecret(clientSecret) //
-				.build();
+	Keycloak keycloak = KeycloakService.getInstance();
 
 			if(keycloak != null){
 				out.println("Realm : "+	keycloak.realms().realm("demo").toString() );
@@ -57,7 +48,7 @@ public class PmDemoApplication {
 
 
 		// Get realm
-		RealmResource realmResource = keycloak.realm(realm);
+		RealmResource realmResource = keycloak.realm(KeycloakService.realm);
 		// Get users
 		UsersResource usersResource = realmResource.users();
 
