@@ -12,7 +12,7 @@ public class KeycloakService {
     final static String clientId = "idm-client";
     final static String clientSecret = "d0309200-cec2-4e5e-8c3d-54065eb4c3e4";
 
-    private KeycloakService() {
+    public KeycloakService() {
     }
 
     public static Keycloak getInstance(){
