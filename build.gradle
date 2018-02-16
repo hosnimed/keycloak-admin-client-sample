@@ -24,25 +24,38 @@ repositories {
 
 
 ext {
-	keycloakVersion = '3.4.2.Final'
+	keycloakVersion = '3.4.1.Final'
+	dozerVersion = '5.5.1'
+	mapstructVersion = '1.2.0.Final'
+	reasteasyVersion = '3.1.4.Final'
 }
 
 dependencies {
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+
 //	compile('org.springframework.boot:spring-boot-actuator-docs')
 //	compile('org.springframework.boot:spring-boot-starter-actuator')
 //	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-security')
 //	compile('org.springframework.boot:spring-boot-starter-web')
+
 	compile('org.keycloak:keycloak-spring-boot-starter')
-	compile('org.keycloak:keycloak-admin-client:3.4.2.Final')
+	compile("org.keycloak:keycloak-admin-client:${keycloakVersion}")
+//	compile(group: 'org.keycloak.testsuite', name: 'integration-arquillian-test-apps-dist', version:"${keycloakVersion}")
+
 	compile('javax.ws.rs:javax.ws.rs-api:2.0')
-	compile( group: 'org.jboss.resteasy', name: 'resteasy-client', version: '3.1.4.Final')
-	compile( group: 'org.jboss.resteasy', name: 'resteasy-jackson2-provider', version: '3.1.4.Final')
+	compile( group: 'org.jboss.resteasy', name: 'resteasy-client', version:  "${reasteasyVersion}")
+	compile( group: 'org.jboss.resteasy', name: 'resteasy-jackson2-provider', version: "${reasteasyVersion}")
+	compile( group: 'net.sf.dozer', name: 'dozer', version: "${dozerVersion}")
+	compile( group: 'org.mapstruct', name: 'mapstruct-jdk8', version: "${mapstructVersion}")
+	compile( group: 'org.mapstruct', name: 'mapstruct-processor', version: "${mapstructVersion}")
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 //	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 //	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
 	testCompile('org.springframework.security:spring-security-test')
+	// AssertJ
+	testCompile("org.assertj:assertj-core-java8:1.0.0m1")
 }
 
 dependencyManagement {
@@ -50,3 +63,16 @@ dependencyManagement {
 		mavenBom "org.keycloak.bom:keycloak-adapter-bom:${keycloakVersion}"
 	}
 }
+
+test {
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+/*
+tasks.withType(JavaCompile) {
+	options.compilerArgs = [
+			'-Amapstruct.suppressGeneratorTimestamp=true'
+	]
+}*/
